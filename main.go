@@ -11,12 +11,9 @@ const JSFILE = `
 	<body>
 		<script>
 			const evtSource = new EventSource("sse");
-			// evtSource.addEventListener("ping", (e) => {
-			// 	console.log(e);
-			// });
-			evtSource.onmessage = function(event) {
-				console.log(event)
-		};
+			evtSource.addEventListener("ping", (e) => {
+				console.log(e);
+			});
 		</script>
 	</body>
 	</html> `
@@ -26,7 +23,7 @@ const JSFILE = `
 // }
 
 func main() {
-	buffer:=make(map int[Game])
+	// buffer:=make(map int[Game])
 	log.Print("listening on :8080")
 	router := http.NewServeMux()
 	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
@@ -40,7 +37,6 @@ func main() {
 		w.Header().Add("Cache-Control", "no-cache")
 		for range 5 {
 			w.Write([]byte(`event: ping
-
 data: {hi:"ji"}
 
 `))
